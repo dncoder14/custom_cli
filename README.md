@@ -89,5 +89,5 @@ mycli --help       # Show help
 
 - Jokes: https://geek-jokes.sameerkumar.website
 - GitHub: https://api.github.com
-- Weather: https://wttr.in
+- Weather: https://open-meteo.com
 
