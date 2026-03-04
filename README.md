@@ -13,10 +13,18 @@ A command-line calculator application built with TypeScript and Commander.js tha
 
 ```bash
 npm install
+npm run build
+sudo npm link
 ```
 
 ## Usage
 
+### Using mycli command (after npm link):
+```bash
+mycli <command> <arguments>
+```
+
+### Using npx ts-node:
 ```bash
 npx ts-node cli.ts <command> <arguments>
 ```
@@ -27,30 +35,30 @@ npx ts-node cli.ts <command> <arguments>
 
 | Command | Description | Example |
 |---------|-------------|----------|
-| `greet <name>` | Greet a user | `npx ts-node cli.ts greet John` |
-| `add <n1> <n2>` | Add two numbers | `npx ts-node cli.ts add 5 3` |
-| `subtract <n1> <n2>` | Subtract two numbers | `npx ts-node cli.ts subtract 10 5` |
-| `multiply <n1> <n2>` | Multiply two numbers | `npx ts-node cli.ts multiply 4 3` |
-| `divide <n1> <n2>` | Divide two numbers | `npx ts-node cli.ts divide 10 2` |
-| `modulo <n1> <n2>` | Get remainder of division | `npx ts-node cli.ts modulo 10 3` |
-| `power <base> <exp>` | Calculate base raised to exponent | `npx ts-node cli.ts power 2 3` |
-| `sqrt <n>` | Calculate square root | `npx ts-node cli.ts sqrt 16` |
-| `abs <n>` | Get absolute value | `npx ts-node cli.ts abs -5` |
-| `percent <n1> <n2>` | Calculate n1 as percentage of n2 | `npx ts-node cli.ts percent 25 100` |
+| `greet <name>` | Greet a user | `mycli greet John` |
+| `add <n1> <n2>` | Add two numbers | `mycli add 5 3` |
+| `subtract <n1> <n2>` | Subtract two numbers | `mycli subtract 10 5` |
+| `multiply <n1> <n2>` | Multiply two numbers | `mycli multiply 4 3` |
+| `divide <n1> <n2>` | Divide two numbers | `mycli divide 10 2` |
+| `modulo <n1> <n2>` | Get remainder of division | `mycli modulo 10 3` |
+| `power <base> <exp>` | Calculate base raised to exponent | `mycli power 2 3` |
+| `sqrt <n>` | Calculate square root | `mycli sqrt 16` |
+| `abs <n>` | Get absolute value | `mycli abs -5` |
+| `percent <n1> <n2>` | Calculate n1 as percentage of n2 | `mycli percent 25 100` |
 
 ### API Integration Commands
 
 | Command | Description | Example |
 |---------|-------------|----------|
-| `joke` | Get a random joke | `npx ts-node cli.ts joke` |
-| `github <username>` | Get GitHub user information | `npx ts-node cli.ts github torvalds` |
-| `weather <city>` | Get weather for a city | `npx ts-node cli.ts weather London` |
+| `joke` | Get a random joke | `mycli joke` |
+| `github <username>` | Get GitHub user information | `mycli github torvalds` |
+| `weather <city>` | Get weather for a city | `mycli weather London` |
 
 ### Utility Commands
 
 ```bash
-npx ts-node cli.ts --version    # Show version
-npx ts-node cli.ts --help       # Show help
+mycli --version    # Show version
+mycli --help       # Show help
 ```
 
 ## OOP Architecture

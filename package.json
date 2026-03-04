@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node cli.ts",
-    "build": "tsc cli.ts",
+    "build": "tsc",
+    "link": "npm run build && npm link",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
