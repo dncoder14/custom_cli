@@ -1,79 +1,163 @@
 #!/usr/bin/env node
 const {Command} = require("commander");
-const axios =  require("axios");
+import { Calculator } from './Calculator';
+import { JokeService } from './JokeService';
+import { GitHubService } from './GitHubService';
+import { WeatherService } from './WeatherService';
 
 const program = new Command();
+const calculator = new Calculator();
+const jokeService = new JokeService();
+const githubService = new GitHubService();
+const weatherService = new WeatherService();
+
+program
+.name('mycli')
+.version('1.0.0')
+.description('A CLI calculator with API integrations');
 
 program
 .command("greet <name>")
+.description("Greet a user")
 .action((name: string)=>{console.log(`Hello ${name}`)})
 
 program
 .command("add <n1> <n2>")
 .description("Add two numbers")
-.action((n1: string ,n2: string)=>{console.log(Number(n1)+Number(n2))})
+.action((n1: string, n2: string)=>{
+    try {
+        console.log(calculator.calculate('add', Number(n1), Number(n2)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
+})
 
 program
 .command("subtract <n1> <n2>")
 .description("Subtract two numbers")
-.action((n1: string ,n2: string)=>{console.log(Number(n1)-Number(n2))})
+.action((n1: string, n2: string)=>{
+    try {
+        console.log(calculator.calculate('subtract', Number(n1), Number(n2)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
+})
 
 program
 .command("multiply <n1> <n2>")
 .description("Multiply two numbers")
-.action((n1: string ,n2: string)=>{console.log(Number(n1)*Number(n2))})
+.action((n1: string, n2: string)=>{
+    try {
+        console.log(calculator.calculate('multiply', Number(n1), Number(n2)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
+})
 
 program
 .command("divide <n1> <n2>")
 .description("Divide two numbers")
-.action((n1: string ,n2: string)=>{
-    if(n2 === "0") console.log("Cannot be divisible by 0")
-    else console.log(Number(n1)/Number(n2))
+.action((n1: string, n2: string)=>{
+    try {
+        console.log(calculator.calculate('divide', Number(n1), Number(n2)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
 })
 
 program
 .command("modulo <n1> <n2>")
 .description("Get remainder of division")
 .action((n1: string, n2: string)=>{
-    if(n2 === "0") console.log("Cannot divide by 0")
-    else console.log(Number(n1) % Number(n2))
+    try {
+        console.log(calculator.calculate('modulo', Number(n1), Number(n2)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
 })
 
 program
 .command("power <base> <exponent>")
 .description("Calculate base raised to exponent")
-.action((base: string, exponent: string)=>{console.log(Math.pow(Number(base), Number(exponent)))})
+.action((base: string, exponent: string)=>{
+    try {
+        console.log(calculator.calculate('power', Number(base), Number(exponent)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
+})
 
 program
 .command("sqrt <n>")
 .description("Calculate square root")
 .action((n: string)=>{
-    if(Number(n) < 0) console.log("Cannot calculate square root of negative number")
-    else console.log(Math.sqrt(Number(n)))
+    try {
+        console.log(calculator.calculate('sqrt', Number(n)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
 })
 
 program
 .command("abs <n>")
 .description("Get absolute value")
-.action((n: string)=>{console.log(Math.abs(Number(n)))})
+.action((n: string)=>{
+    try {
+        console.log(calculator.calculate('abs', Number(n)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
+})
 
 program
 .command("percent <n1> <n2>")
 .description("Calculate n1 as percentage of n2")
 .action((n1: string, n2: string)=>{
-    if(n2 === "0") console.log("Cannot divide by 0")
-    else console.log((Number(n1) / Number(n2)) * 100)
+    try {
+        console.log(calculator.calculate('percent', Number(n1), Number(n2)));
+    } catch(err: any) {
+        console.log(err.message);
+    }
 })
 
 program
 .command("joke")
-.description("Get to read a Joke")
+.description("Get a random joke")
 .action(async()=>{
     try {
-    const joke = await axios.get("https://geek-jokes.sameerkumar.website/api?format=json");
-    console.log(joke.data.joke)
-    }catch(err){
-        console.log(`Error: ${err}`)
+        const joke = await jokeService.fetchJoke();
+        console.log(joke);
+    } catch(err: any) {
+        console.log(err.message);
+    }
+})
+
+program
+.command("github <username>")
+.description("Get GitHub user information")
+.action(async(username: string)=>{
+    try {
+        const user = await githubService.getUserInfo(username);
+        console.log(`\nName: ${user.name}`);
+        console.log(`Bio: ${user.bio}`);
+        console.log(`Location: ${user.location}`);
+        console.log(`Followers: ${user.followers}`);
+        console.log(`Following: ${user.following}`);
+        console.log(`Public Repos: ${user.repos}`);
+    } catch(err: any) {
+        console.log(err.message);
+    }
+})
+
+program
+.command("weather <city>")
+.description("Get weather information for a city")
+.action(async(city: string)=>{
+    try {
+        const weather = await weatherService.getWeather(city);
+        console.log(weather);
+    } catch(err: any) {
+        console.log(err.message);
     }
 })
 
